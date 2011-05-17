@@ -1,0 +1,17 @@
+#summary Information about iReSign
+
+= Introduction =
+
+iReSign allows iDevice app bundles (.ipa) files to be signed or resigned with digital certificate from Apple for distribution.
+
+This tool is aimed primarily at enterprises who distribute their own apps through an internal "App Store".
+
+= Requirements =
+
+* Mac OS 10.6+
+
+* A certificate issued by Apple.
+
+* An .ipa-file which you want to sign.
+
+Note: Xcode is *not* required.
