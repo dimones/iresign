@@ -135,7 +135,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = "nil";
+				ORGANIZATIONNAME = nil;
 			};
 			buildConfigurationList = C115EE2013815023003B9ACC /* Build configuration list for PBXProject "iReSign" */;
 			compatibilityVersion = "Xcode 3.2";
