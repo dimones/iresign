@@ -14,6 +14,7 @@
     NSUserDefaults *defaults;
     
     NSTask *unzipTask;
+    NSTask *provisioningTask;
     NSTask *codesignTask;
     NSTask *verifyTask;
     NSTask *zipTask;
@@ -27,8 +28,10 @@
     NSString *verificationResult;
     
     IBOutlet NSTextField *pathField;
+    IBOutlet NSTextField *provisioningPathField;
     IBOutlet NSTextField *certField;
     IBOutlet NSButton    *browseButton;
+    IBOutlet NSButton    *provisioningBrowseButton;
     IBOutlet NSButton    *resignButton;
     IBOutlet NSTextField *statusLabel;
     IBOutlet NSProgressIndicator *flurry;
@@ -40,9 +43,12 @@
 
 - (IBAction)resign:(id)sender;
 - (IBAction)browse:(id)sender;
+- (IBAction)provisioningBrowse:(id)sender;
 - (IBAction)showHelp:(id)sender;
 
 - (void)checkUnzip:(NSTimer *)timer;
+- (void)doProvisioning;
+- (void)checkProvisioning:(NSTimer *)timer;
 - (void)doCodeSigning;
 - (void)checkCodesigning:(NSTimer *)timer;
 - (void)doVerifySignature;

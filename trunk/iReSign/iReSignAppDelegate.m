@@ -13,12 +13,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self resizeWindow:115];
+    [self resizeWindow:145];
     [flurry setAlphaValue:0.5];
     
     defaults = [NSUserDefaults standardUserDefaults];
     
-    [certField setStringValue:[defaults valueForKey:@"CERT_NAME"]];
+    if ([defaults valueForKey:@"CERT_NAME"])
+        [certField setStringValue:[defaults valueForKey:@"CERT_NAME"]];
+    if ([defaults valueForKey:@"MOBILEPROVISION_PATH"])
+        [provisioningPathField setStringValue:[defaults valueForKey:@"MOBILEPROVISION_PATH"]];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/zip"]) {
         NSRunAlertPanel(@"Error", 
@@ -43,6 +46,7 @@
 - (IBAction)resign:(id)sender {
     //Save cert name
     [defaults setValue:[certField stringValue] forKey:@"CERT_NAME"];
+    [defaults setValue:[provisioningPathField stringValue] forKey:@"MOBILEPROVISION_PATH"];
     [defaults synchronize];
     
     codesigningResult = nil;
@@ -50,7 +54,7 @@
     
     originalIpaPath = [[pathField stringValue] retain];
     workingPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"com.appulize.iresign"] retain];
-        
+    
     if ([[[originalIpaPath pathExtension] lowercaseString] isEqualToString:@"ipa"]) {
         [self disableControls];
         
@@ -65,7 +69,7 @@
             NSLog(@"Unzipping %@",originalIpaPath);
             [statusLabel setStringValue:@"Extracting original app"];
         }
-
+        
         unzipTask = [[NSTask alloc] init];
         [unzipTask setLaunchPath:@"/usr/bin/unzip"];
         [unzipTask setArguments:[NSArray arrayWithObjects:@"-q", originalIpaPath, @"-d", workingPath, nil]];
@@ -91,13 +95,123 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:[workingPath stringByAppendingPathComponent:@"Payload"]]) {
             NSLog(@"Unzipping done");
             [statusLabel setStringValue:@"Original app extracted"];
-            [self doCodeSigning];
+            if ([[provisioningPathField stringValue] isEqualTo:@""]) {
+                [self doCodeSigning];
+            } else {
+                [self doProvisioning];
+            }
         } else {
             NSRunAlertPanel(@"Error", 
                             @"Unzip failed",
                             @"OK",nil,nil);
             [self enableControls];
             [statusLabel setStringValue:@"Ready"];
+        }
+    }
+}
+
+- (void)doProvisioning {
+    NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[workingPath stringByAppendingPathComponent:@"Payload"] error:nil];
+    
+    for (NSString *file in dirContents) {
+        if ([[[file pathExtension] lowercaseString] isEqualToString:@"app"]) {
+            appPath = [[workingPath stringByAppendingPathComponent:@"Payload"] stringByAppendingPathComponent:file];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[appPath stringByAppendingPathComponent:@"embedded.mobileprovision"]]) {
+                NSLog(@"Found embedded.mobileprovision, deleting.");
+                [[NSFileManager defaultManager] removeItemAtPath:[appPath stringByAppendingPathComponent:@"embedded.mobileprovision"] error:nil];
+            }
+            break;
+        }
+    }
+    
+    NSString *targetPath = [appPath stringByAppendingPathComponent:@"embedded.mobileprovision"];
+    
+    provisioningTask = [[NSTask alloc] init];
+    [provisioningTask setLaunchPath:@"/bin/cp"];
+    [provisioningTask setArguments:[NSArray arrayWithObjects:[provisioningPathField stringValue], targetPath, nil]];
+    
+    [provisioningTask launch];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkProvisioning:) userInfo:nil repeats:TRUE];
+}
+
+- (void)checkProvisioning:(NSTimer *)timer {
+    if ([provisioningTask isRunning] == 0) {
+        [timer invalidate];
+        [provisioningTask release];
+        provisioningTask = nil;
+        
+        NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[workingPath stringByAppendingPathComponent:@"Payload"] error:nil];
+        
+        for (NSString *file in dirContents) {
+            if ([[[file pathExtension] lowercaseString] isEqualToString:@"app"]) {
+                appPath = [[workingPath stringByAppendingPathComponent:@"Payload"] stringByAppendingPathComponent:file];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:[appPath stringByAppendingPathComponent:@"embedded.mobileprovision"]]) {
+                    
+                    BOOL identifierOK = FALSE;
+                    NSString *identifierInProvisioning = @"";
+                    
+                    NSString *embeddedProvisioning = [NSString stringWithContentsOfFile:[appPath stringByAppendingPathComponent:@"embedded.mobileprovision"] encoding:NSASCIIStringEncoding error:nil];
+                    NSArray* embeddedProvisioningLines = [embeddedProvisioning componentsSeparatedByCharactersInSet:
+                                                          [NSCharacterSet newlineCharacterSet]];
+                    
+                    for (int i = 0; i <= [embeddedProvisioningLines count]; i++) {
+                        if ([[embeddedProvisioningLines objectAtIndex:i] rangeOfString:@"application-identifier"].location != NSNotFound) {
+                            
+                            NSInteger fromPosition = [[embeddedProvisioningLines objectAtIndex:i+1] rangeOfString:@"<string>"].location + 8;
+                            
+                            NSInteger toPosition = [[embeddedProvisioningLines objectAtIndex:i+1] rangeOfString:@"</string>"].location;
+                            
+                            NSRange range;
+                            range.location = fromPosition;
+                            range.length = toPosition-fromPosition;
+                            
+                            NSString *fullIdentifier = [[embeddedProvisioningLines objectAtIndex:i+1] substringWithRange:range];
+                            
+                            NSArray *identifierComponents = [fullIdentifier componentsSeparatedByString:@"."];
+                            
+                            if ([[identifierComponents lastObject] isEqualTo:@"*"]) {
+                                identifierOK = TRUE;
+                            }
+                            
+                            for (int i = 1; i < [identifierComponents count]; i++) {
+                                identifierInProvisioning = [identifierInProvisioning stringByAppendingString:[identifierComponents objectAtIndex:i]];
+                                if (i < [identifierComponents count]-1) {
+                                    identifierInProvisioning = [identifierInProvisioning stringByAppendingString:@"."];
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    
+                    NSLog(@"Mobileprovision identifier: %@",identifierInProvisioning);
+                    
+                    NSString *infoPlist = [NSString stringWithContentsOfFile:[appPath stringByAppendingPathComponent:@"Info.plist"] encoding:NSASCIIStringEncoding error:nil];
+                    if ([infoPlist rangeOfString:identifierInProvisioning].location != NSNotFound) {
+                        NSLog(@"Identifiers match");
+                        identifierOK = TRUE;
+                    }
+                    
+                    if (identifierOK) {
+                        NSLog(@"Provisioning completed.");
+                        [statusLabel setStringValue:@"Provisioning completed"];
+                        [self doCodeSigning];
+                    } else {
+                        NSRunAlertPanel(@"Error",
+                                        @"Product identifiers don't match",
+                                        @"OK",nil,nil);
+                        [self enableControls];
+                        [statusLabel setStringValue:@"Ready"];
+                    }
+                } else {
+                    NSRunAlertPanel(@"Error",
+                                    @"Provisioning failed",
+                                    @"OK",nil,nil);
+                    [self enableControls];
+                    [statusLabel setStringValue:@"Ready"];
+                }
+                break;
+            }
         }
     }
 }
@@ -276,6 +390,21 @@
     }
 }
 
+- (IBAction)provisioningBrowse:(id)sender {
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    
+    [openDlg setCanChooseFiles:TRUE];
+    [openDlg setCanChooseDirectories:FALSE];
+    [openDlg setAllowsMultipleSelection:FALSE];
+    [openDlg setAllowsOtherFileTypes:FALSE];
+    
+    if ( [openDlg runModalForTypes:[NSArray arrayWithObject:@"mobileprovision"]] == NSOKButton )
+    {        
+        NSString* fileNameOpened = [[openDlg filenames] objectAtIndex:0];
+        [provisioningPathField setStringValue:fileNameOpened];
+    }
+}
+
 - (IBAction)showHelp:(id)sender {
     NSRunAlertPanel(@"How to use iReSign", 
                     @"iReSign allows you to re-sign any unencrypted ipa-file with any certificate for which you hold the corresponding private key.\n\n1. Drag your unsigned .ipa file to the top box, or use the browse button.\n\n2. Enter your full certificate name from Keychain Access, for example \"iPhone Developer: Firstname Lastname (XXXXXXXXXX)\" in the bottom box.\n\n3. Click ReSign! and wait. The resigned file will be saved in the same folder as the original file.",
@@ -291,7 +420,7 @@
     [flurry startAnimation:self];
     [flurry setAlphaValue:1.0];
     
-    [self resizeWindow:170];
+    [self resizeWindow:185];
 }
 
 - (void)enableControls {
