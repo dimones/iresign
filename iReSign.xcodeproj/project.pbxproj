@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5889956814F4745B006FC00E /* iResignCLIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889956314F4745B006FC00E /* iResignCLIDelegate.m */; };
+		5889956914F4745B006FC00E /* IResignLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889956514F4745B006FC00E /* IResignLogic.m */; };
+		5889957214F47523006FC00E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5889957114F47523006FC00E /* Foundation.framework */; };
+		5889957514F47523006FC00E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889957414F47523006FC00E /* main.m */; };
+		5889957E14F4754E006FC00E /* iReSignCLI.1 in Resources */ = {isa = PBXBuildFile; fileRef = 5889957D14F4754E006FC00E /* iReSignCLI.1 */; };
+		5889957F14F4759C006FC00E /* iReSignAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C115EE3D13815024003B9ACC /* iReSignAppDelegate.m */; };
+		5889958014F475A1006FC00E /* IResignLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889956514F4745B006FC00E /* IResignLogic.m */; };
+		5889958114F475A4006FC00E /* iResignCLIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889956314F4745B006FC00E /* iResignCLIDelegate.m */; };
+		5889958214F475AF006FC00E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C115EE2A13815024003B9ACC /* Cocoa.framework */; };
 		C115EE2B13815024003B9ACC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C115EE2A13815024003B9ACC /* Cocoa.framework */; };
 		C115EE3513815024003B9ACC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C115EE3313815024003B9ACC /* InfoPlist.strings */; };
 		C115EE3813815024003B9ACC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C115EE3713815024003B9ACC /* main.m */; };
@@ -17,7 +26,29 @@
 		C14247301381B75B00F5B51F /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C142472F1381B75B00F5B51F /* Icon.icns */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5889956D14F47523006FC00E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5889956314F4745B006FC00E /* iResignCLIDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iResignCLIDelegate.m; sourceTree = "<group>"; };
+		5889956414F4745B006FC00E /* iResignCLIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iResignCLIDelegate.h; sourceTree = "<group>"; };
+		5889956514F4745B006FC00E /* IResignLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IResignLogic.m; sourceTree = "<group>"; };
+		5889956614F4745B006FC00E /* IResignLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResignLogic.h; sourceTree = "<group>"; };
+		5889956714F4745B006FC00E /* iResignResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iResignResponder.h; sourceTree = "<group>"; };
+		5889956F14F47523006FC00E /* iResignCLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iResignCLI; sourceTree = BUILT_PRODUCTS_DIR; };
+		5889957114F47523006FC00E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5889957414F47523006FC00E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5889957714F47523006FC00E /* iResignCLI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iResignCLI-Prefix.pch"; sourceTree = "<group>"; };
+		5889957D14F4754E006FC00E /* iReSignCLI.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = iReSignCLI.1; sourceTree = "<group>"; };
 		C115EE2613815024003B9ACC /* iReSign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iReSign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C115EE2A13815024003B9ACC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C115EE2D13815024003B9ACC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -36,6 +67,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5889956C14F47523006FC00E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5889958214F475AF006FC00E /* Cocoa.framework in Frameworks */,
+				5889957214F47523006FC00E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C115EE2313815024003B9ACC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,10 +87,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5889957314F47523006FC00E /* iResignCLI */ = {
+			isa = PBXGroup;
+			children = (
+				5889957D14F4754E006FC00E /* iReSignCLI.1 */,
+				5889957414F47523006FC00E /* main.m */,
+				5889957614F47523006FC00E /* Supporting Files */,
+			);
+			path = iResignCLI;
+			sourceTree = "<group>";
+		};
+		5889957614F47523006FC00E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5889957714F47523006FC00E /* iResignCLI-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		C115EE1B13815023003B9ACC = {
 			isa = PBXGroup;
 			children = (
 				C115EE3013815024003B9ACC /* iReSign */,
+				5889957314F47523006FC00E /* iResignCLI */,
 				C115EE2913815024003B9ACC /* Frameworks */,
 				C115EE2713815024003B9ACC /* Products */,
 			);
@@ -60,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				C115EE2613815024003B9ACC /* iReSign.app */,
+				5889956F14F47523006FC00E /* iResignCLI */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				C115EE2A13815024003B9ACC /* Cocoa.framework */,
+				5889957114F47523006FC00E /* Foundation.framework */,
 				C115EE2C13815024003B9ACC /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -86,6 +147,11 @@
 		C115EE3013815024003B9ACC /* iReSign */ = {
 			isa = PBXGroup;
 			children = (
+				5889956314F4745B006FC00E /* iResignCLIDelegate.m */,
+				5889956414F4745B006FC00E /* iResignCLIDelegate.h */,
+				5889956514F4745B006FC00E /* IResignLogic.m */,
+				5889956614F4745B006FC00E /* IResignLogic.h */,
+				5889956714F4745B006FC00E /* iResignResponder.h */,
 				C115EE3C13815024003B9ACC /* iReSignAppDelegate.h */,
 				C115EE3D13815024003B9ACC /* iReSignAppDelegate.m */,
 				C115EE3F13815024003B9ACC /* MainMenu.xib */,
@@ -111,6 +177,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5889956E14F47523006FC00E /* iResignCLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5889957A14F47523006FC00E /* Build configuration list for PBXNativeTarget "iResignCLI" */;
+			buildPhases = (
+				5889956B14F47523006FC00E /* Sources */,
+				5889956C14F47523006FC00E /* Frameworks */,
+				5889956D14F47523006FC00E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iResignCLI;
+			productName = iResignCLI;
+			productReference = 5889956F14F47523006FC00E /* iResignCLI */;
+			productType = "com.apple.product-type.tool";
+		};
 		C115EE2513815024003B9ACC /* iReSign */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C115EE4413815024003B9ACC /* Build configuration list for PBXNativeTarget "iReSign" */;
@@ -150,6 +233,7 @@
 			projectRoot = "";
 			targets = (
 				C115EE2513815024003B9ACC /* iReSign */,
+				5889956E14F47523006FC00E /* iResignCLI */,
 			);
 		};
 /* End PBXProject section */
@@ -164,18 +248,32 @@
 				C115EE4113815024003B9ACC /* MainMenu.xib in Resources */,
 				C142471F138174E500F5B51F /* ResourceRules.plist in Resources */,
 				C14247301381B75B00F5B51F /* Icon.icns in Resources */,
+				5889957E14F4754E006FC00E /* iReSignCLI.1 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5889956B14F47523006FC00E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5889957514F47523006FC00E /* main.m in Sources */,
+				5889957F14F4759C006FC00E /* iReSignAppDelegate.m in Sources */,
+				5889958014F475A1006FC00E /* IResignLogic.m in Sources */,
+				5889958114F475A4006FC00E /* iResignCLIDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C115EE2213815024003B9ACC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C115EE3813815024003B9ACC /* main.m in Sources */,
 				C115EE3E13815024003B9ACC /* iReSignAppDelegate.m in Sources */,
+				5889956814F4745B006FC00E /* iResignCLIDelegate.m in Sources */,
+				5889956914F4745B006FC00E /* IResignLogic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +307,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5889957B14F47523006FC00E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iResignCLI/iResignCLI-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5889957C14F47523006FC00E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iResignCLI/iResignCLI-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		C115EE4213815024003B9ACC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -276,6 +410,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5889957A14F47523006FC00E /* Build configuration list for PBXNativeTarget "iResignCLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5889957B14F47523006FC00E /* Debug */,
+				5889957C14F47523006FC00E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C115EE2013815023003B9ACC /* Build configuration list for PBXProject "iReSign" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
